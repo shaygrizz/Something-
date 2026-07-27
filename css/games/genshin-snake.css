@@ -1,0 +1,79 @@
+/*
+  genshin-snake.css — round 2
+  ----------------------------------------------------------------
+  Deep purple + gold palette, echoing Genshin Impact's UI. The
+  snake's head carries a small gem "Vision" mark drawn in CSS.
+*/
+
+.genshin-wrap{
+  background:linear-gradient(180deg,#2b1f4d,#4d3480);
+  display:flex; flex-direction:column; align-items:center;
+  padding-top:var(--game-safe-top); padding-bottom:12px;
+  box-sizing:border-box; height:100%;
+  touch-action:none; /* we handle swipes ourselves; stops the page from scrolling/bouncing on drag */
+}
+
+.gs-score{
+  order:1;
+  color:#ffe9a8; font-weight:700; font-family:'Quicksand',sans-serif;
+  background:rgba(0,0,0,0.28); padding:4px 16px; border-radius:14px;
+  margin-bottom:10px; z-index:5; flex:0 0 auto;
+}
+
+.gs-board{
+  order:2; flex:0 0 auto;
+  position:relative;
+  background:rgba(255,255,255,0.06);
+  border:3px solid #d4af6a;
+  border-radius:10px;
+  box-shadow:0 0 20px rgba(212,175,106,0.4);
+}
+.gs-board.gs-hit{ animation:gsShake .2s; }
+@keyframes gsShake{
+  0%,100%{ transform:translateX(0); }
+  25%{ transform:translateX(-6px); }
+  75%{ transform:translateX(6px); }
+}
+
+.gs-seg{
+  position:absolute; box-sizing:border-box; border-radius:5px;
+  background:linear-gradient(135deg,#8f6fe0,#5a3fc0);
+  border:1px solid rgba(212,175,106,0.4);
+}
+.gs-head{
+  background:linear-gradient(135deg,#ffd76a,#e0a83f);
+  border:1px solid rgba(255,255,255,0.6);
+  z-index:2;
+}
+.gs-head::after{
+  content:'✦'; position:absolute; inset:0;
+  display:flex; align-items:center; justify-content:center;
+  font-size:65%; color:#5a3fc0;
+}
+.gs-food{ position:absolute; display:flex; align-items:center; justify-content:center; }
+
+.gs-hint{
+  order:3; flex:0 0 auto;
+  margin-top:10px;
+  color:rgba(255,233,168,0.85); font-family:'Quicksand',sans-serif;
+  font-weight:600; font-size:12px; text-align:center;
+}
+
+.gs-dpad{
+  order:4; flex:0 0 auto;
+  margin-top:8px;
+  display:grid; grid-template-columns:repeat(3,52px); grid-template-rows:repeat(2,52px);
+  gap:6px; z-index:6;
+  touch-action:none;
+}
+.gs-dbtn{
+  border:none; border-radius:12px; background:rgba(255,255,255,0.18);
+  color:#ffe9a8; font-size:20px;
+  display:flex; align-items:center; justify-content:center;
+  -webkit-tap-highlight-color:transparent;
+}
+.gs-dbtn:active{ background:rgba(255,255,255,0.36); transform:scale(0.94); }
+.gs-up{ grid-column:2; grid-row:1; }
+.gs-left{ grid-column:1; grid-row:2; }
+.gs-down{ grid-column:2; grid-row:2; }
+.gs-right{ grid-column:3; grid-row:2; }

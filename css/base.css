@@ -1,0 +1,32 @@
+/*
+  base.css
+  ----------------------------------------------------------------
+  Reset + the app shell. #app holds three full-screen .screen
+  panels (cover / game / final); js/screens.js toggles which one
+  has the .active class.
+*/
+*{ box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
+
+html,body{
+  margin:0;padding:0;height:100%;overflow:hidden;
+  font-family:'Quicksand',sans-serif;
+  color:var(--ink);
+}
+
+#app{
+  position:relative;
+  width:100%;height:100vh;
+  background:linear-gradient(180deg,var(--sky-top) 0%,var(--sky-mid) 45%,var(--sky-bottom) 100%);
+  overflow:hidden;
+}
+
+.screen{
+  position:absolute;inset:0;
+  display:none;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  padding:32px 24px;
+}
+.screen.active{ display:flex; }

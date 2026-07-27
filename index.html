@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>For Princess Yeva</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Quicksand:wght@400;600;700&display=swap" rel="stylesheet">
+
+<!-- styles: one file per concern, loaded in this order -->
+<link rel="stylesheet" href="css/variables.css">
+<link rel="stylesheet" href="css/base.css">
+<link rel="stylesheet" href="css/background.css">
+<link rel="stylesheet" href="css/typography.css">
+<link rel="stylesheet" href="css/game-ui.css">
+<link rel="stylesheet" href="css/games/sailor-pop.css">
+<link rel="stylesheet" href="css/games/genshin-snake.css">
+<link rel="stylesheet" href="css/games/inazuma-memory.css">
+<link rel="stylesheet" href="css/games/italy-quiz.css">
+<link rel="stylesheet" href="css/luna-cat.css">
+<link rel="stylesheet" href="css/final-screen.css">
+</head>
+<body>
+<div id="app">
+
+  <!-- COVER SCREEN -->
+  <div class="screen active" id="cover-screen">
+    <div class="sun"></div>
+    <h1 class="title" id="cover-title"></h1>
+    <p class="subtitle" id="cover-subtitle"></p>
+    <button class="btn" id="start-btn"></button>
+    <div class="footer-note" id="footer-cover"></div>
+  </div>
+
+  <!-- GAME SCREEN -->
+  <div class="screen" id="game-screen">
+    <div class="sun"></div>
+    <div class="game-area" id="game-area"></div>
+    <div class="game-hud">
+      <h2 id="round-title">Round 1</h2>
+      <div class="round-dots" id="round-dots">
+        <span id="dot-1">1</span><span id="dot-2">2</span><span id="dot-3">3</span><span id="dot-4">4</span>
+      </div>
+    </div>
+    <div class="footer-note" id="footer-game"></div>
+  </div>
+
+  <!-- FINAL SCREEN -->
+  <div class="screen" id="final-screen">
+    <div class="sun"></div>
+    <h1 class="title" id="final-title"></h1>
+    <div class="prize-box"><p id="final-message"></p></div>
+    <button class="btn" id="prize-btn"></button>
+    <div class="footer-note" id="footer-final"></div>
+    <div class="celebrate-layer" id="celebrate-layer"></div>
+  </div>
+
+</div>
+
+<!-- scripts: namespace + config first, main.js last (wires everything up) -->
+<script src="js/app-namespace.js"></script>
+<script src="js/config.js"></script>
+<script src="js/screens.js"></script>
+<script src="js/background-fx.js"></script>
+<script src="js/luna-cat.js"></script>
+<script src="js/cover-cats.js"></script>
+<script src="js/games/sailor-pop.js"></script>
+<script src="js/games/genshin-snake.js"></script>
+<script src="js/games/inazuma-memory.js"></script>
+<script src="js/games/city-quiz.js"></script>
+<script src="js/game.js"></script>
+<script src="js/cat-walker.js"></script>
+<script src="js/celebration.js"></script>
+<script src="js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,93 @@
+/*
+  final-screen.css
+  ----------------------------------------------------------------
+  The congratulations screen and the celebration overlay that
+  plays when the prize button is pressed (falling hearts + the
+  paw-print trail drawn by js/celebration.js).
+*/
+
+#final-screen h1.title{ font-size:clamp(30px,8vw,50px); }
+
+/* the moment the celebration starts, the text disappears completely —
+   no fade, no lingering behind the cats/heart */
+#final-screen.is-celebrating .title,
+#final-screen.is-celebrating .prize-box,
+#final-screen.is-celebrating #prize-btn{
+  display:none;
+}
+
+.prize-box{
+  background:var(--card);
+  border-radius:26px;
+  padding:26px 28px;
+  box-shadow:0 16px 40px rgba(0,0,0,0.12);
+  max-width:380px;
+  margin-bottom:26px;
+  z-index:2;
+}
+.prize-box p{ margin:0; font-weight:600; font-size:16px; color:#5c4a72; line-height:1.5; }
+
+.celebrate-layer{
+  position:absolute;inset:0;z-index:6;pointer-events:none;
+  overflow:hidden;
+}
+
+/* a single paw print left behind on the heart-shaped path */
+.paw{
+  position:absolute;
+  font-size:20px;
+  opacity:0;
+  animation:pawIn .5s ease forwards;
+  transform-origin:center;
+}
+@keyframes pawIn{
+  from{ opacity:0; transform:scale(0.3) rotate(var(--rot,0deg)); }
+  to{ opacity:0.95; transform:scale(1) rotate(var(--rot,0deg)); }
+}
+
+/* a single flower that blooms in to fill the heart's interior */
+.heart-flower{
+  position:absolute;
+  opacity:0;
+  transform:translate(-50%,-50%) scale(0.2);
+  animation:flowerBloom .6s ease forwards;
+}
+@keyframes flowerBloom{
+  0%{ opacity:0; transform:translate(-50%,-50%) scale(0.2) rotate(-20deg); }
+  70%{ opacity:1; transform:translate(-50%,-50%) scale(1.15) rotate(6deg); }
+  100%{ opacity:1; transform:translate(-50%,-50%) scale(1) rotate(0deg); }
+}
+
+/* falling confetti hearts */
+.confetti-heart{
+  position:absolute;
+  top:-30px;
+  font-size:20px;
+  animation:fallHeart linear forwards;
+  z-index:5;
+  pointer-events:none;
+}
+@keyframes fallHeart{
+  to{ transform:translateY(110vh) rotate(360deg); opacity:0.2; }
+}
+
+/* the message that fades in once the heart is completely filled with flowers */
+.celebration-caption{
+  position:absolute;
+  left:50%; top:8%;
+  transform:translate(-50%,-10px);
+  width:min(90vw, 480px);
+  text-align:center;
+  font-family:'Pacifico', cursive;
+  font-size:clamp(18px,4.4vw,28px);
+  color:#7a3f8a;
+  text-shadow:0 2px 10px rgba(255,255,255,0.9), 0 1px 0 rgba(255,255,255,0.6);
+  opacity:0;
+  z-index:7;
+  pointer-events:none;
+  animation:captionIn 1.4s ease forwards;
+}
+@keyframes captionIn{
+  from{ opacity:0; transform:translate(-50%,10px); }
+  to{ opacity:1; transform:translate(-50%,0); }
+}

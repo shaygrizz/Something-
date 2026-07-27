@@ -1,0 +1,244 @@
+/*
+  luna-cat.css
+  ----------------------------------------------------------------
+  A self-contained, pure-CSS cat (no images). Built at a fixed
+  280x400 canvas (.lc-stage) and then scaled down with a plain
+  `transform: scale()` on the outer .lc-wrap/.lc-scale wrapper, so
+  the drawing itself never has to be redone at a different size.
+
+  Markup shape expected (see js/luna-cat.js for the template):
+
+    .lc-wrap                 <- positioned in the world (left/top), sized 70x100
+      .lc-scale              <- static scale-down transform only
+        .lc-stage            <- 280x400 canvas, has its own idle animations
+          .lc-tail > svg > .lc-tail-path
+          .lc-body
+            .lc-paw.left / .right
+          .lc-neck
+          .lc-head
+            .lc-ear.left / .right > .lc-ear-inner
+            .lc-moon > svg > .lc-moon-path
+            .lc-eyes > .lc-eye x2
+            .lc-lashes.left / .right > .lc-lash x3
+            .lc-whiskers.left / .right > .lc-whisker x3
+            .lc-muzzle > .lc-nose, .lc-mouth
+
+  To resize the cat wherever it's used, only change .lc-wrap's
+  width/height and the scale factor in .lc-scale — every part
+  inside keeps its proportions automatically.
+*/
+
+.lc-wrap{
+  position:absolute;
+  width:70px;height:100px;
+  pointer-events:none;
+}
+.lc-wrap.lc-flip{ transform:scaleX(-1); }   /* face the other direction */
+.lc-walker{ bottom:16px; z-index:2; filter:drop-shadow(0 6px 4px rgba(0,0,0,0.18)); }
+.lc-walker-top{ top:16px; z-index:2; filter:drop-shadow(0 6px 4px rgba(0,0,0,0.18)); }
+.lc-run{ z-index:7; }
+
+/* two big, still cats flanking the cover screen */
+.lc-flank{ bottom:0; z-index:1; filter:drop-shadow(0 8px 8px rgba(0,0,0,0.18)); }
+.lc-flank.lc-flank-left{ left:-6px; }
+.lc-flank.lc-flank-right{ right:-6px; }
+.lc-wrap.lc-flank{ width:150px; height:214px; }
+.lc-wrap.lc-flank .lc-scale{ transform:scale(0.535); }
+
+.lc-scale{
+  position:absolute;top:0;left:0;
+  width:280px;height:400px;
+  transform:scale(0.25);           /* <- change this to resize the cat */
+  transform-origin:top left;
+}
+.lc-stage{
+  position:relative;
+  width:280px;height:400px;
+  transform-origin:bottom center;
+  animation:lcBreathe 4.2s ease-in-out infinite;
+}
+@keyframes lcBreathe{
+  0%,100%{ transform:scale(1); }
+  50%{ transform:scale(1.018); }
+}
+
+/* ---- Tail: ONE continuous SVG path, stroked like a rounded tube.
+   Since it's a single path (not separate base/hook/tip pieces), it can
+   never show a gap or misaligned seam — it's connected by construction. ---- */
+.lc-tail{
+  position:absolute;left:0;bottom:66px;
+  width:140px;height:160px;
+  transform-origin:71% 99%;      /* roughly where the tail meets the hip */
+  animation:lcTailSway 3.6s ease-in-out infinite;
+  z-index:1;
+  overflow:visible;
+}
+.lc-tail svg{ width:100%; height:100%; overflow:visible; display:block; }
+.lc-tail-path{
+  fill:none;
+  stroke:var(--fur);
+  stroke-width:24;
+  stroke-linecap:round;   /* rounded base + rounded curled tip, for free */
+  stroke-linejoin:round;
+}
+@keyframes lcTailSway{
+  0%,100%{ transform:rotate(-5deg); }
+  50%{ transform:rotate(6deg); }
+}
+
+/* ---- Body ---- */
+.lc-body{
+  position:absolute;bottom:0;left:50%;
+  transform:translateX(-50%);
+  width:168px;height:210px;
+  background:linear-gradient(180deg, var(--fur-light) 0%, var(--fur) 45%, var(--fur-dark) 100%);
+  border-radius:46% 46% 40% 40% / 30% 30% 55% 55%;
+  z-index:3;
+  box-shadow:inset 0 -14px 26px rgba(0,0,0,0.28);
+}
+.lc-body::before{
+  content:"";
+  position:absolute;top:26px;left:50%;
+  transform:translateX(-50%);
+  width:64px;height:150px;
+  background:linear-gradient(180deg, var(--fur-dark), var(--fur));
+  border-radius:50% 50% 40% 40%;
+  opacity:0.55;
+}
+.lc-paw{
+  position:absolute;bottom:-6px;
+  width:34px;height:22px;
+  background:linear-gradient(180deg, var(--fur), var(--fur-dark));
+  border-radius:50%;
+  z-index:4;
+}
+.lc-paw.left{ left:34px; transform:rotate(-6deg); }
+.lc-paw.right{ right:34px; transform:rotate(6deg); }
+
+/* ---- Neck: bridges head and body so there's no visible seam ---- */
+.lc-neck{
+  position:absolute;top:176px;left:50%;
+  transform:translateX(-50%);
+  width:112px;height:56px;
+  background:linear-gradient(180deg, var(--fur), var(--fur-dark));
+  border-radius:38% 38% 30% 30%;
+  z-index:2;
+}
+
+/* ---- Head ---- */
+.lc-head{
+  position:absolute;top:76px;left:50%;
+  transform:translateX(-50%);
+  width:150px;height:136px;
+  background:linear-gradient(180deg, var(--fur-light), var(--fur) 60%, var(--fur-dark));
+  border-radius:48% 48% 42% 42% / 50% 50% 50% 50%;
+  z-index:5;
+  animation:lcHeadTilt 5s ease-in-out infinite;
+  transform-origin:50% 100%;
+}
+@keyframes lcHeadTilt{
+  0%,100%{ transform:translateX(-50%) rotate(0deg); }
+  50%{ transform:translateX(-50%) rotate(1.5deg); }
+}
+
+.lc-ear{
+  position:absolute;top:-28px;
+  width:0;height:0;
+  border-left:32px solid transparent;
+  border-right:32px solid transparent;
+  border-bottom:58px solid var(--fur);
+  z-index:4;
+}
+.lc-ear.left{ left:-6px; transform:rotate(-18deg); }
+.lc-ear.right{ right:-6px; transform:rotate(18deg); }
+.lc-ear-inner{
+  position:absolute;top:16px;
+  width:0;height:0;
+  border-left:16px solid transparent;
+  border-right:16px solid transparent;
+  border-bottom:32px solid var(--ear-in);
+}
+.lc-ear.left .lc-ear-inner{ left:8px; }
+.lc-ear.right .lc-ear-inner{ right:8px; }
+
+/* ---- Crescent moon mark: a single true SVG crescent (one path, drawn
+   as outer-circle-major-arc + inner-circle-minor-arc). Because it's one
+   shape with a transparent background, nothing else is ever visible —
+   no second circle, and the glow filter hugs only the crescent itself. ---- */
+.lc-moon{
+  position:absolute;top:28px;left:50%;
+  width:22px;height:22px;
+  transform:translateX(-50%) rotate(180deg);
+  z-index:6;
+  overflow:visible;
+  filter:drop-shadow(0 0 4px rgba(244,211,94,0.7));
+  animation:lcMoonGlow 3s ease-in-out infinite;
+}
+.lc-moon svg{ width:100%; height:100%; overflow:visible; display:block; }
+.lc-moon-path{ fill:var(--moon); }
+@keyframes lcMoonGlow{
+  0%,100%{ filter:drop-shadow(0 0 3px rgba(244,211,94,0.5)); }
+  50%{ filter:drop-shadow(0 0 8px rgba(244,211,94,0.9)); }
+}
+
+/* ---- Eyes: big, round, doll-like — most of the personality lives here ---- */
+.lc-eyes{
+  position:absolute;top:54px;left:0;right:0;
+  display:flex;justify-content:center;gap:6px;
+  z-index:6;
+}
+.lc-eye{
+  position:relative;width:40px;height:46px;
+  background:#fff;border:2px solid #241f33;
+  border-radius:50% 50% 52% 52% / 55% 55% 60% 60%;
+  overflow:hidden;
+  animation:lcBlink 4.5s ease-in-out infinite;
+}
+.lc-eye::before{
+  content:"";position:absolute;left:50%;top:56%;
+  transform:translate(-50%,-50%);
+  width:30px;height:30px;
+  background:radial-gradient(circle at 35% 30%, var(--eye-light), var(--eye) 60%, #3a1414 100%);
+  border-radius:50%;
+}
+.lc-eye::after{
+  content:"";position:absolute;left:28%;top:18%;
+  width:9px;height:9px;background:#fff;border-radius:50%;opacity:0.95;
+}
+@keyframes lcBlink{
+  0%,92%,100%{ height:46px; }
+  95%{ height:4px; }
+}
+
+.lc-lashes{ position:absolute;top:44px;width:40px;height:16px; }
+.lc-lashes.left{ left:6px; }
+.lc-lashes.right{ right:6px; transform:scaleX(-1); }
+.lc-lash{ position:absolute;width:16px;height:1.8px;background:#241f33;transform-origin:left center; }
+.lc-lash:nth-child(1){ top:0; left:0; transform:rotate(-20deg); }
+.lc-lash:nth-child(2){ top:6px; left:2px; transform:rotate(-4deg); }
+.lc-lash:nth-child(3){ top:12px; left:0; transform:rotate(14deg); }
+
+.lc-muzzle{ position:absolute;top:104px;left:50%;transform:translateX(-50%);width:14px;height:14px;z-index:6; }
+.lc-nose{
+  position:absolute;top:0;left:50%;transform:translateX(-50%);
+  width:8px;height:6px;background:var(--ear-in);
+  border-radius:50% 50% 50% 50% / 60% 60% 100% 100%;
+}
+.lc-mouth{
+  position:absolute;top:6px;left:50%;width:10px;height:6px;
+  border-left:1.6px solid #241f33;border-bottom:1.6px solid #241f33;
+  border-radius:0 0 0 8px;
+  transform:translateX(-50%) rotate(-8deg);
+}
+
+.lc-whiskers{ position:absolute;top:98px;width:56px;height:22px;z-index:5; }
+.lc-whiskers.left{ left:-40px; }
+.lc-whiskers.right{ right:-40px; transform:scaleX(-1); }
+.lc-whisker{
+  position:absolute;width:52px;height:1.4px;
+  background:rgba(255,255,255,0.75);
+  transform-origin:right center;right:0;
+}
+.lc-whisker:nth-child(1){ top:0; transform:rotate(6deg); }
+.lc-whisker:nth-child(2){ top:9px; transform:rotate(0deg); }
+.lc-whisker:nth-child(3){ top:18px; transform:rotate(-6deg); }

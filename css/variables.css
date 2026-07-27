@@ -1,0 +1,33 @@
+/*
+  variables.css
+  ----------------------------------------------------------------
+  Every color used anywhere in the project lives here. Change the
+  mood of the whole site by editing this file only — nothing else
+  should ever hard-code a color.
+*/
+:root{
+  /* sky / daytime background */
+  --sky-top:#5EC6FF;
+  --sky-mid:#8FDDFF;
+  --sky-bottom:#FFF3C4;
+  --sun:#FFD166;
+
+  /* UI accents (buttons, titles, progress) */
+  --accent:#FF7AA2;
+  --accent-deep:#FF5C8A;
+  --ink:#4A3B5C;
+  --card:#FFFFFF;
+
+  /* Luna the cat's palette */
+  --fur:#4f4964;
+  --fur-dark:#3c374d;
+  --fur-light:#615a78;
+  --ear-in:#c98fa0;
+  --eye:#8a2e2e;
+  --eye-light:#c65454;
+  --moon:#f4d35e;
+
+  /* space every mini-game reserves at the top so its content clears
+     the "Round N — Name" HUD pill + dots instead of sitting under it */
+  --game-safe-top:78px;
+}

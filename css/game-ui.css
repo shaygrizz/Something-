@@ -1,0 +1,64 @@
+/*
+  game-ui.css
+  ----------------------------------------------------------------
+  Shared chrome around every round: the round indicator dots, the
+  small HUD (round title), and the "Round complete" banner. Each
+  mini-game (css/games/*.css) draws everything inside #game-area
+  itself and renders its own score readout.
+*/
+
+/* Round dots — a simple segmented progress bar instead of numbered circles */
+.round-dots{ display:flex; gap:6px; margin-top:8px; }
+.round-dots span{
+  width:28px; height:7px; border-radius:6px;
+  font-size:0; /* the "1"/"2"/... text in the HTML is visually hidden — dots read as progress segments */
+  background:rgba(255,255,255,0.4);
+  border:1px solid rgba(255,255,255,0.55);
+}
+.round-dots span.done{
+  background:var(--accent-deep); border-color:var(--accent-deep);
+}
+.round-dots span.current{
+  background:#fff;
+  box-shadow:0 0 8px rgba(255,255,255,0.9);
+}
+
+/* Game screen layout */
+#game-screen{ justify-content:flex-start; padding-top:18px; }
+.game-hud{
+  position:relative; z-index:5; /* must sit above each mini-game's own full-bleed background */
+  display:flex; flex-direction:column; align-items:center;
+}
+.game-hud h2{
+  font-family:'Quicksand',sans-serif; font-weight:700;
+  font-size:14px; letter-spacing:0.4px; text-transform:uppercase;
+  color:#fff; margin:0;
+  background:rgba(40,25,55,0.45);
+  padding:7px 20px; border-radius:20px;
+  box-shadow:0 4px 12px rgba(0,0,0,0.18);
+  backdrop-filter:blur(2px);
+}
+.game-area{ position:absolute; inset:0; top:0; z-index:1; overflow:hidden; }
+
+/* "Round N complete" banner */
+.round-banner{
+  position:absolute; inset:0; z-index:10;
+  display:flex; align-items:center; justify-content:center;
+  pointer-events:none;
+}
+.round-banner-text{
+  font-family:'Pacifico',cursive;
+  font-size:40px; color:var(--accent-deep);
+  background:rgba(255,255,255,0.85);
+  padding:18px 34px; border-radius:24px;
+  box-shadow:0 10px 30px rgba(0,0,0,0.15);
+  opacity:0;
+  animation:bannerPop 1.6s ease forwards;
+}
+@keyframes bannerPop{
+  0%{ opacity:0; transform:scale(0.6); }
+  15%{ opacity:1; transform:scale(1.05); }
+  25%{ transform:scale(1); }
+  80%{ opacity:1; }
+  100%{ opacity:0; transform:scale(1.1); }
+}
