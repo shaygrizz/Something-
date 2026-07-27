@@ -21,7 +21,7 @@
     ROUND_MUSIC_VOLUME: 0.42,       // background music, kept under the cat/finale sounds
 
     // ----- round 1: "Moonlight Flight" — Sailor Moon themed Flappy Bird -----
-    SAILOR_TARGET: 10,               // towers to fly through to clear the round
+    SAILOR_TARGET: 5,               // towers to fly through to clear the round
     SAILOR_BIRD_WIDTH: 40,           // pixel-art sprite bounding box (matches the drawn art exactly)
     SAILOR_BIRD_HEIGHT: 48,
     SAILOR_GRAVITY: 1500,            // px/s^2, downward acceleration while flying
@@ -35,7 +35,7 @@
     SAILOR_TOP_SAFE: 64,             // px kept clear at the top so play stays under the round HUD
 
     // ----- round 2: Genshin Impact snake -----
-    SNAKE_TARGET: 10,               // food items to eat to clear the round
+    SNAKE_TARGET: 5,               // food items to eat to clear the round
     SNAKE_COLS: 14,
     SNAKE_ROWS: 14,
     SNAKE_TICK_MS: 155,
