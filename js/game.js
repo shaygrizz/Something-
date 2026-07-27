@@ -87,15 +87,8 @@
     }, cfg.ROUND_BANNER_MS);
   }
 
-  function playFinalReveal(){
-    try{
-      const snd = new Audio(cfg.FINAL_REVEAL_SOUND);
-      snd.volume = cfg.FINAL_REVEAL_VOLUME;
-      snd.play().catch(() => {});
-    }catch(e){ /* sound not available — final screen still shows fine without it */ }
-
-    // the celebration song starts at the exact same moment as the reveal
-    // sound, right as the "You did it!" title appears on the final screen
+function playFinalReveal(){
+    // the celebration song starts right as the "You did it!" title appears
     try{
       const song = new Audio(cfg.FINAL_SONG);
       song.volume = cfg.FINAL_SONG_VOLUME;
